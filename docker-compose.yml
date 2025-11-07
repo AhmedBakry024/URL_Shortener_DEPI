@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - ./data:/app/data
+      - quote_data:/app/data
     restart: always
 
   frontend:
@@ -23,7 +23,9 @@ services:
     container_name: quote_generator_frontend
     ports:
       - "8081:80"
-
     depends_on:
       - backend
     restart: always
+
+volumes:
+  quote_data:
