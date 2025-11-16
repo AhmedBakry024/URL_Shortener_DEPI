@@ -145,7 +145,49 @@ if [ "$success_count" -eq 5 ]; then
     print_result 0 "Multiple random quote requests ($success_count/5)"
 else
     print_result 1 "Multiple random quote requests ($success_count/5)"
+# ...existing code...
+set -e
+
+# Track overall exit status (0 = success, 1 = any failure)
+EXIT_CODE=0
+
+# Function to print test results
+print_result() {
+    if [ $1 -eq 0 ]; then
+        echo -e "${GREEN}✓ PASS${NC}: $2"
+    else
+        echo -e "${RED}✗ FAIL${NC}: $2"
+        EXIT_CODE=1
+    fi
+}
+# ...existing code...
+
+# Test 10: Multiple Random Quotes
+echo -e "${YELLOW}Test 10: Multiple Random Quotes (5 requests)${NC}"
+success_count=0
+for i in {1..5}; do
+    # Avoid set -e abort on curl failure; default to "000" status if curl fails
+    response=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL/quote" || echo "000")
+    if [ "$response" -eq 200 ]; then
+        ((success_count++))
+    fi
+done
+if [ "$success_count" -eq 5 ]; then
+    print_result 0 "Multiple random quote requests ($success_count/5)"
+else
+    print_result 1 "Multiple random quote requests ($success_count/5)"
 fi
+echo ""
+
+# ...existing code...
+
+echo "======================================"
+echo "Test Suite Complete!"
+echo "======================================"
+echo ""
+# Return non-zero if any test failed
+exit $EXIT_CODE
+# ...existing code...
 echo ""
 
 echo "======================================"
