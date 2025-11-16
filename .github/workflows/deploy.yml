@@ -10,6 +10,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Make script executable
+        working-directory: scripts
+        run: chmod +x test-api.sh
+
       - name: Run API tests
         working-directory: scripts
         run: ./test-api.sh
