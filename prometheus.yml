@@ -7,7 +7,7 @@ scrape_configs:
   # Backend (Express) - exposes metrics at /metrics
   - job_name: 'quote_generator_backend'
     static_configs:
-      - targets: ['host.docker.internal:3000']
+      - targets: ['backend:3000']
         labels:
           service: 'quote-generator-backend'
     metrics_path: /metrics

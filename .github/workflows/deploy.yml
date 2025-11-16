@@ -1,0 +1,22 @@
+name: CI pilpelines
+on: 
+  push:
+    branches:
+      - features
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: test api
+        run: |
+          cd scripts
+          ./run_api_tests.sh
+
+      # - name: docker login
+      #   run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+
+      # - name: Build Docker image
+      #   run: docker build -t my-app:${{ github.sha }} -f ./frontend/Dockerfile.dev ./frontend
